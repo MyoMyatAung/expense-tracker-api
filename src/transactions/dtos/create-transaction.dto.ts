@@ -1,26 +1,25 @@
 import {
      IsDateString,
+     IsMongoId,
      IsNumber,
      IsString
 } from "class-validator";
 
 export class CreateTransactionDto {
-     @IsString()
-     _id: string;
 
      @IsString()
-     transaction_type: string;
+     readonly transaction_type: string;
 
      @IsDateString()
-     date: string;
+     readonly date: Date;
 
-     @IsString()
-     category: string;
+     @IsMongoId()
+     readonly category: string;
 
      @IsNumber()
-     amount: number;
+     readonly amount: number;
 
      @IsString()
-     description: string;
+     readonly description: string;
 
 }

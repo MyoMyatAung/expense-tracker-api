@@ -20,10 +20,10 @@ export class CategoryController {
      }
 
      @Post()
-     create(
+     async create(
           @Body() body: CreateCategoryDto
      ) {
-          return this.categoryService.create(body);
+          return await this.categoryService.create(body);
      }
 
      @Put(':id')

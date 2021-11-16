@@ -1,31 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateTransactionDto } from './dtos/create-transaction.dto';
+import { Transaction, TransactionDocument } from './schemas/transactions.schema';
 
 @Injectable()
 export class TransactionsService {
 
-     findAll() {
-          return 'Find all transactions';
+     constructor(
+          @InjectModel(Transaction.name) private transactionModel: Model<TransactionDocument>
+     ) { }
+
+     async findAll(): Promise<Transaction[]> {
+          return this.transactionModel
+               .find()
+               .populate('category', 'name')
+               .exec();
      }
 
-     findOne(id: string) {
-          return `Find particular transaction: ${id}`;
+     async findOne(id: string): Promise<Transaction> {
+          return this.transactionModel.findById(id);
      }
 
-     create(transaction: CreateTransactionDto) {
-          console.log('> Create Transaction: ', transaction);
-          return 'Create transaction';
+     async create(transaction: CreateTransactionDto): Promise<Transaction> {
+          const createdTransaction = new this.transactionModel(transaction);
+          return createdTransaction.save();
      }
 
-     update(transaction: CreateTransactionDto, id: string) {
-          console.log('> Update Transaction Object: ', transaction);
-          console.log('> Update transaction ID: ', id);
-          return 'Update transaction';
+     async update(transaction: CreateTransactionDto, id: string): Promise<Transaction> {
+          return this.transactionModel.findByIdAndUpdate(id, transaction)
      }
 
-     remove(id: string) {
-          console.log('> Remove transaction ID: ', id);
-          return 'Remove transaction';
+     async remove(id: string) {
+          return this.transactionModel.deleteOne({ _id: id });
      }
 
 }
