@@ -16,6 +16,9 @@ export class CreateTransactionDto {
      @IsMongoId()
      readonly category: string;
 
+     @IsMongoId()
+     readonly user: string;
+
      @IsNumber()
      readonly amount: number;
 
