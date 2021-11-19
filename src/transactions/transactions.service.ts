@@ -11,15 +11,16 @@ export class TransactionsService {
           @InjectModel(Transaction.name) private transactionModel: Model<TransactionDocument>
      ) { }
 
-     async findAll(): Promise<Transaction[]> {
+     async findAll(userId: string): Promise<Transaction[]> {
           return this.transactionModel
-               .find()
+               .find({ user: userId })
                .populate('category', 'name')
+               .populate('user', 'username email')
                .exec();
      }
 
-     async findOne(id: string): Promise<Transaction> {
-          return this.transactionModel.findById(id);
+     async findOne(id: string, userId: string): Promise<Transaction> {
+          return this.transactionModel.findOne({ _id: id, user: userId });
      }
 
      async create(transaction: CreateTransactionDto): Promise<Transaction> {

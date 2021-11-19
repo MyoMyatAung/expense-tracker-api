@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import {Document, Schema as MongooseSchema} from "mongoose";
+import { Document, Schema as MongooseSchema } from "mongoose";
 import { Category } from "src/category/schemas/category.schema";
 
 export type TransactionDocument = Transaction & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Transaction {
      @Prop({
           type: String,
@@ -24,6 +24,13 @@ export class Transaction {
           required: true
      })
      category: string;
+
+     @Prop({
+          type: MongooseSchema.Types.ObjectId,
+          ref: 'User',
+          required: true
+     })
+     user: string;
 
      @Prop({
           type: Number,
