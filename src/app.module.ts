@@ -17,15 +17,15 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     TransactionsModule,
     CategoryModule,
     AuthModule,
-    UsersModule
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard
-    }
+      useClass: JwtAuthGuard,
+    },
   ],
 })
-export class AppModule { }
+export class AppModule {}

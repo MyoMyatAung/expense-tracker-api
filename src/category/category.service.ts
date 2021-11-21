@@ -6,30 +6,28 @@ import { Category, CategoryDocument } from './schemas/category.schema';
 
 @Injectable()
 export class CategoryService {
+  constructor(
+    @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
+  ) {}
 
-     constructor(
-          @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>
-     ) { }
+  async findAll(): Promise<Category[]> {
+    return this.categoryModel.find().exec();
+  }
 
-     async findAll(): Promise<Category[]> {
-          return this.categoryModel.find().exec();
-     }
+  async findOne(id: string): Promise<Category> {
+    return this.categoryModel.findById(id);
+  }
 
-     async findOne(id: string): Promise<Category> {
-          return this.categoryModel.findById(id);
-     }
+  async create(category: CreateCategoryDto): Promise<Category> {
+    const createdCategory = new this.categoryModel(category);
+    return createdCategory.save();
+  }
 
-     async create(category: CreateCategoryDto): Promise<Category> {
-          const createdCategory = new this.categoryModel(category);
-          return createdCategory.save();
-     }
+  async update(id: string, category: CreateCategoryDto): Promise<Category> {
+    return this.categoryModel.findByIdAndUpdate(id, category);
+  }
 
-     async update(id: string, category: CreateCategoryDto): Promise<Category> {
-          return this.categoryModel.findByIdAndUpdate(id, category);
-     }
-
-     remove(id: string) {
-          return `Remove Category: ${id}`;
-     }
-
+  remove(id: string) {
+    return `Remove Category: ${id}`;
+  }
 }

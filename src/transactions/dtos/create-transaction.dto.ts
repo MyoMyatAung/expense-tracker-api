@@ -1,28 +1,21 @@
-import {
-     IsDateString,
-     IsMongoId,
-     IsNumber,
-     IsString
-} from "class-validator";
+import { IsDateString, IsMongoId, IsNumber, IsString } from 'class-validator';
 
 export class CreateTransactionDto {
+  @IsString()
+  readonly transaction_type: string;
 
-     @IsString()
-     readonly transaction_type: string;
+  @IsDateString()
+  readonly date: Date;
 
-     @IsDateString()
-     readonly date: Date;
+  @IsMongoId()
+  readonly category: string;
 
-     @IsMongoId()
-     readonly category: string;
+  @IsMongoId()
+  readonly user: string;
 
-     @IsMongoId()
-     readonly user: string;
+  @IsNumber()
+  readonly amount: number;
 
-     @IsNumber()
-     readonly amount: number;
-
-     @IsString()
-     readonly description: string;
-
+  @IsString()
+  readonly description: string;
 }

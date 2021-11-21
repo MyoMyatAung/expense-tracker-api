@@ -1,8 +1,14 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
-import { JwtAuthGuard, Public } from './auth/jwt-auth.guard';
+import { Public } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { CreateUserDto } from './users/dtos/create-user.dto';
 
@@ -10,8 +16,8 @@ import { CreateUserDto } from './users/dtos/create-user.dto';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+  ) {}
 
   @Get()
   getHello(): string {
@@ -27,9 +33,7 @@ export class AppController {
 
   @Post('/auth/register')
   @Public()
-  async register(
-    @Body() userDto: CreateUserDto
-  ) {
+  async register(@Body() userDto: CreateUserDto) {
     return this.authService.register(userDto);
   }
 }

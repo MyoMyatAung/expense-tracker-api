@@ -6,16 +6,14 @@ import { TransactionsService } from './transactions.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature(
-      [
-        {
-          name: Transaction.name,
-          schema: TransactionSchema,
-        }
-      ]
-    )
+    MongooseModule.forFeature([
+      {
+        name: Transaction.name,
+        schema: TransactionSchema,
+      },
+    ]),
   ],
   controllers: [TransactionsController],
-  providers: [TransactionsService]
+  providers: [TransactionsService],
 })
-export class TransactionsModule { }
+export class TransactionsModule {}
